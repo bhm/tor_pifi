@@ -2,7 +2,9 @@
 
 ## Elevator pitch
 
-Badabing bada boom, Tor over wlan1 interface and connection over wlan0.
+Badabing bada boom, Access point with Tor over wlan1 interface, internet over wlan0.
+
+![Say what?](https://media.tenor.com/images/a95accd3110e3197ebb13dae50b52aec/tenor.gif)
 
 In simpler terms. 
 
@@ -37,4 +39,12 @@ Problem being
 4. Make the script runnable `chmod +x ./tor_pifi_wlan1.sh`
 5. Run `sudo ./tor_pifi_wlan1.sh`
 
+## After party
 
+There is also a pifi_wlan1 script. Use this if you do not want a Tor connection.
+
+I also do not support OpenVPN via this script. 
+
+You probably want to make a copy of the OS on the card.
+
+`sudo dd if=/dev/sdX of=./raspbian-with-pi-fi.img bs=1M`
