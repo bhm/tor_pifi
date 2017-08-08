@@ -7,7 +7,6 @@ if (( $EUID != 0 )); then
    exit 1 
 fi
 
-
 echo "
 $(tput setaf 2)              .~~.   .~~.
 $(tput setaf 6)   /         $(tput setaf 2)'. \ ' ' / .'$(tput setaf 6)         \ 
@@ -28,6 +27,9 @@ read -p "$(tput bold ; tput setaf 2)Press [Enter] to begin, [Ctrl-C] to abort...
 
 echo "$(tput setaf 6)Updating packages...$(tput sgr0)"
 apt-get update -q -y
+
+echo "$(tput setaf 6)Upgrading packages...$(tput sgr0)"
+apt-get upgrade -q -y
 
 echo "$(tput setaf 6)Installing hostapd...$(tput sgr0)"
 apt-get install hostapd
@@ -84,9 +86,9 @@ echo "$(tput setaf 6)PiFi network SSID set to $(tput bold)$ssid$(tput sgr0 ; tpu
 pwd1="0"
 pwd2="1"
 until [ $pwd1 == $pwd2 ]; do
-  echo "$(tput bold ; tput setaf 2)Type a password to access your PiFi network, then press [ENTER]:$(tput sgr0)"
+  echo "$(tput bold ; tput setaf 2)Type a password to access your $ssid PiFi network, then press [ENTER]:$(tput sgr0)"
   read -s pwd1
-  echo "$(tput bold ; tput setaf 2)Verify password to access your PiFi network, then press [ENTER]:$(tput sgr0)"
+  echo "$(tput bold ; tput setaf 2)Verify password to access your $ssid PiFi network, then press [ENTER]:$(tput sgr0)"
   read -s pwd2
 done
 

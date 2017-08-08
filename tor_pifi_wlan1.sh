@@ -33,6 +33,9 @@ read -p "$(tput bold ; tput setaf 2)Press [Enter] to begin, [Ctrl-C] to abort...
 echo "$(tput setaf 6)Updating packages...$(tput sgr0)"
 apt-get update -q -y
 
+echo "$(tput setaf 6)Upgrading packages...$(tput sgr0)"
+apt-get upgrade -q -y
+
 echo "$(tput setaf 6)Installing hostapd...$(tput sgr0)"
 apt-get install hostapd
 
@@ -88,9 +91,9 @@ echo "$(tput setaf 6)PiFi network SSID set to $(tput bold)$ssid$(tput sgr0 ; tpu
 pwd1="0"
 pwd2="1"
 until [ $pwd1 == $pwd2 ]; do
-  echo "$(tput bold ; tput setaf 2)Type a password to access your PiFi network, then press [ENTER]:$(tput sgr0)"
+  echo "$(tput bold ; tput setaf 2)Type a password to access your $ssid PiFi network, then press [ENTER]:$(tput sgr0)"
   read -s pwd1
-  echo "$(tput bold ; tput setaf 2)Verify password to access your PiFi network, then press [ENTER]:$(tput sgr0)"
+  echo "$(tput bold ; tput setaf 2)Verify password to access your $ssid PiFi network, then press [ENTER]:$(tput sgr0)"
   read -s pwd2
 done
 
@@ -187,9 +190,6 @@ if [ "$setup_tor" == "yes" ] || [ "$setup_tor" == "y" ] || ["$setup_tor" == ""];
   DNSPort 53
   DNSListenAddress 192.168.42.1" >> /etc/tor/torrc
 
-  echo "$(tput setaf 6)Enabling SSH$(tput sgr0)"
-  update-rc.d ssh enable
-
   echo "$(tput setaf 6)Establishing $(tput bold)ssh$(tput sgr0 ; tput setaf 6) exception on port 22...$(tput sgr0)"
   iptables -t nat -A PREROUTING -i wlan0 -p tcp --dport 22 -j REDIRECT --to-ports 22
   iptables -t nat -A PREROUTING -i wlan1 -p tcp --dport 22 -j REDIRECT --to-ports 22
@@ -214,10 +214,12 @@ if [ "$setup_tor" == "yes" ] || [ "$setup_tor" == "y" ] || ["$setup_tor" == ""];
   echo "$(tput setaf 6)Setting Tor to start at boot...$(tput sgr0)"
   update-rc.d tor enable
 
-  echo "$(tput setaf 6)Setup complete!
-
+  echo "$(tput setaf 6)Tor Setup complete! 
   $(tput bold)Verify by visiting: $(tput setaf 3)https://check.torproject.org/$(tput sgr0)"
 fi
+
+echo "$(tput setaf 6)Enabling SSH$(tput sgr0)"
+update-rc.d ssh enable
 
 echo "$(tput setaf 6)Setup complete!$(tput setaf 6)Rebooting$(tput sgr0)..."
 reboot
